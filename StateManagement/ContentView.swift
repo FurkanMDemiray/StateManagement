@@ -8,18 +8,39 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+@Observable
+class DarkTheme {
+    var isEnabled: Bool = false
+}
 
-    @State var counter = 0
+struct DarkChoiceView: View {
+
+    @Bindable var darkTheme = DarkTheme()
 
     var body: some View {
-        VStack {
-            AddButton(counter: $counter)
-            Text("Counter: \(counter)")
-        }
+        Toggle(isOn: $darkTheme.isEnabled) {
+            Text("Dark Theme")
+        }.fixedSize()
+            .foregroundColor(darkTheme.isEnabled ? .white : .black)
     }
 }
 
+
+struct ContentView: View {
+
+    // @State var counter = 0
+    @State var darkTheme = DarkTheme()
+
+    var body: some View {
+        VStack {
+            //AddButton(counter: $counter)
+            //Text("Counter: \(counter)")
+            DarkChoiceView(darkTheme: darkTheme)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(darkTheme.isEnabled ? Color.black : Color.white)
+    }
+}
+/*
 struct AddButton: View {
     @Binding var counter: Int
 
@@ -31,7 +52,7 @@ struct AddButton: View {
         }
     }
 }
-
+*/
 #Preview {
     ContentView()
 }
