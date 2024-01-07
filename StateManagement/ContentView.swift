@@ -6,19 +6,36 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+
+    @State var counter = 0
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            AddButton(counter: $counter)
+            Text("Counter: \(counter)")
         }
-        .padding()
+    }
+}
+
+struct AddButton: View {
+    @Binding var counter: Int
+
+    var body: some View {
+        Button(action: {
+            self.counter += 1
+        }) {
+            Text("Add")
+        }
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
+
+
